@@ -58,6 +58,10 @@ object Repository {
 
                 val dailyResponse = deferredDaily.await()
 
+                Log.d("rep","""
+                    status1 is ${realtimeResponse.status}
+                    status2 is ${dailyResponse.status}
+                """.trimIndent())
                 if(realtimeResponse.status=="ok" && dailyResponse.status=="ok"){
                     Result.success(Weather(
                         realtimeResponse.result.realtime,
@@ -75,10 +79,6 @@ object Repository {
                 }
             }
         }
-
-
-
-
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
         liveData<Result<T>>(context) {

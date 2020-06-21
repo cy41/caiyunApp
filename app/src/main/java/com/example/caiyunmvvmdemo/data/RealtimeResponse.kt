@@ -3,7 +3,7 @@ package com.example.caiyunmvvmdemo.data
 import com.google.gson.annotations.SerializedName
 
 //实时天气
-class RealtimeResponse(
+data class RealtimeResponse(
     val status: String,
     val result: Result
 ) {
@@ -12,7 +12,7 @@ class RealtimeResponse(
 
     data class Realtime(
         val temperature: Float,
-        val skyCon: String,
+        val skycon: String,
         @SerializedName("air_quality") val airQuality: AirQuality
     )
 
