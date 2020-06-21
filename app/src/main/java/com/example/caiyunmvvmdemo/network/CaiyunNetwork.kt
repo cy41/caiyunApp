@@ -1,7 +1,8 @@
 package com.example.caiyunmvvmdemo.network
 
 import android.util.Log
-import com.example.caiyunmvvmdemo.data.PlaceResponse
+import com.example.caiyunmvvmdemo.network.retrofitInterface.PlaceService
+import com.example.caiyunmvvmdemo.network.retrofitInterface.WeatherService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,6 +16,13 @@ object CaiyunNetwork {
     private val placeService= ServiceCreator.create<PlaceService>()
 
     suspend fun searchPlaces(query: String) = placeService.serchPlaces(query).await()
+
+    private val weatherService= ServiceCreator.create<WeatherService>()
+
+    suspend fun getDailyResponse(lng: String,lat: String) = weatherService.getDailyResponse(lng,lat).await()
+
+    suspend fun getRealtimeResponse(lng: String,lat: String) = weatherService.getRealtimeResponse(lng,lat).await()
+
 
     private suspend fun <T> Call<T>.await():T {
         return suspendCoroutine { continuation ->

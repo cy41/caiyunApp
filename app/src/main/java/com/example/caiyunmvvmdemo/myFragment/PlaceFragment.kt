@@ -46,7 +46,7 @@ class PlaceFragment: Fragment() {
 
     private fun initRecyclerView(){
         val layoutManager= LinearLayoutManager(activity)
-        adapter= PlaceAdapter(viewModel.placeList)
+        adapter= PlaceAdapter(this,viewModel.placeList)
         binding.apply {
             recyclerView.adapter=adapter
             recyclerView.layoutManager=layoutManager

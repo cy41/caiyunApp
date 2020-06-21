@@ -5,7 +5,7 @@ import android.content.Context
 
 class AppAplication: Application() {
     companion object{
-        const val TOKEN = ""
+        const val TOKEN = "c6VOYL5xHedPRm6l"
         lateinit var context: Context
     }
 

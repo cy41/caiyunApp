@@ -1,4 +1,4 @@
-package com.example.caiyunmvvmdemo.network
+package com.example.caiyunmvvmdemo.network.retrofitInterface
 
 import com.example.caiyunmvvmdemo.AppAplication
 import com.example.caiyunmvvmdemo.data.PlaceResponse
