@@ -15,6 +15,7 @@ import com.example.caiyunmvvmdemo.data.Weather
 import com.example.caiyunmvvmdemo.data.getSky
 import com.example.caiyunmvvmdemo.databinding.ActivityWeatherBinding
 import com.example.caiyunmvvmdemo.viewModels.WeatherViewModel
+import kotlinx.android.synthetic.main.activity_weather.*
 import kotlinx.android.synthetic.main.fragment_forecast.view.*
 
 import kotlinx.android.synthetic.main.fragment_life_index.*
@@ -34,10 +35,16 @@ class WeatherActivity : AppCompatActivity() {
         binding=DataBindingUtil.setContentView(this,R.layout.activity_weather)
         //setContentView(R.layout.activity_weather)
         observeUI()
-
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            refreshWeather()
+        }
 
     }
 
+    private fun refreshWeather(){
+        viewModel.refreshWeather(viewModel.locationLng,viewModel.locationLat)
+        binding.swipeRefreshLayout.isRefreshing=false
+    }
     //设置viewModel中的一些参数，以及观察livedata数据变化
     fun observeUI(){
         viewModel.apply {
@@ -104,7 +111,6 @@ class WeatherActivity : AppCompatActivity() {
 
         binding.fragmentForecast.recyclerView.layoutManager=LinearLayoutManager(this)
         binding.fragmentForecast.recyclerView.adapter=WeatherAdapter(list)
-
 
         val lifeIndex=daily.lifeIndex
         binding.apply {
