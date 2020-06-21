@@ -1,11 +1,16 @@
 package com.example.caiyunmvvmdemo
 
+import android.annotation.SuppressLint
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_forecast.view.*
 
 import kotlinx.android.synthetic.main.fragment_life_index.*
 import kotlinx.android.synthetic.main.now.*
+import kotlinx.android.synthetic.main.now.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,15 +39,35 @@ class WeatherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=DataBindingUtil.setContentView(this,R.layout.activity_weather)
-        //setContentView(R.layout.activity_weather)
         observeUI()
+        initListener()
+
+    }
+
+    fun initListener(){
         binding.swipeRefreshLayout.setOnRefreshListener {
             refreshWeather()
         }
 
+        binding.now.navBtn.setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener{
+            override fun onDrawerStateChanged(newState: Int) {}
+
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+
+            override fun onDrawerClosed(drawerView: View) {
+                val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                manager.hideSoftInputFromWindow(drawerView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            }
+
+            override fun onDrawerOpened(drawerView: View) {}
+
+        })
     }
 
-    private fun refreshWeather(){
+    fun refreshWeather(){
         viewModel.refreshWeather(viewModel.locationLng,viewModel.locationLat)
         binding.swipeRefreshLayout.isRefreshing=false
     }
@@ -86,7 +112,10 @@ class WeatherActivity : AppCompatActivity() {
 
         currentAQI.text="空气指数 ${realtime.airQuality.aqi.chn.toInt()}"
 
-        nowLayout.setBackgroundResource(getSky(realtime.skycon).bg)
+        val id=getSky(realtime.skycon).bg
+        if(id!=null){
+            now.setBackgroundResource(getSky(realtime.skycon).bg)
+        }
 
         val days=daily.skycon.size
 

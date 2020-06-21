@@ -1,6 +1,8 @@
 package com.example.caiyunmvvmdemo.myFragment
 
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,12 +10,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.caiyunmvvmdemo.MainActivity
 import com.example.caiyunmvvmdemo.R
 import com.example.caiyunmvvmdemo.WeatherActivity
 import com.example.caiyunmvvmdemo.adapter.PlaceAdapter
@@ -41,7 +49,9 @@ class PlaceFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if(loadLocalData()) return
+        if(activity is MainActivity && viewModel.isSavedPlace()){
+            if(loadLocalData()) return
+        }
         initRecyclerView()
         observeUI()
     }
@@ -69,41 +79,20 @@ class PlaceFragment: Fragment() {
             recyclerView.layoutManager=layoutManager
 
             searchPlaceEdit.apply {
-                addTextChangedListener(object : TextWatcher{
-                    override fun afterTextChanged(s: Editable?) {
-                        Log.d(TAG,"textChanged")
-                        val str=s.toString()
-                        println(str)
-                        if(str.isNotEmpty()){
-                            viewModel.searchPlaces(str)
-                        }
-                        else{
-                            recyclerView.visibility=View.GONE
-                            bgImageView.visibility=View.VISIBLE
-                            viewModel.placeList.clear()
-                            adapter.notifyDataSetChanged()
-                        }
+                addTextChangedListener { s ->
+                    Log.d(TAG,"textChanged")
+                    val str=s.toString()
+                    println(str)
+                    if(str.isNotEmpty()){
+                        viewModel.searchPlaces(str)
                     }
-
-                    override fun beforeTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        count: Int,
-                        after: Int
-                    ) {
-
+                    else{
+                        recyclerView.visibility=View.GONE
+                        bgImageView.visibility=View.VISIBLE
+                        viewModel.placeList.clear()
+                        adapter.notifyDataSetChanged()
                     }
-
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
-
-                    }
-
-                })
+                }
             }
         }
     }

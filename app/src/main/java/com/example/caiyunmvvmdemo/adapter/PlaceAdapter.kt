@@ -8,11 +8,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.caiyunmvvmdemo.AppAplication
+import com.example.caiyunmvvmdemo.MainActivity
 import com.example.caiyunmvvmdemo.R
 import com.example.caiyunmvvmdemo.WeatherActivity
 import com.example.caiyunmvvmdemo.data.Place
 import com.example.caiyunmvvmdemo.databinding.PlaceItemBinding
 import com.example.caiyunmvvmdemo.myFragment.PlaceFragment
+import kotlinx.android.synthetic.main.activity_weather.*
 
 class PlaceAdapter(val fragment: Fragment,val list: List<Place>): RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
 
@@ -36,13 +38,26 @@ class PlaceAdapter(val fragment: Fragment,val list: List<Place>): RecyclerView.A
                 placeAddress.text=place.address
                 setClickListener {
                     Toast.makeText(AppAplication.context,"click",Toast.LENGTH_SHORT).show()
-                    val intent=Intent(AppAplication.context,WeatherActivity::class.java).apply {
-                        putExtra("location_lng",place.location.lng)
-                        putExtra("location_lat",place.location.lat)
-                        putExtra("place_name",place.name)
+                    if(fragment.activity is WeatherActivity){
+                        (fragment.activity as WeatherActivity).apply {
+                            drawerLayout.closeDrawers()
+                            viewModel.locationLat=place.location.lat
+                            viewModel.locationLng=place.location.lng
+                            viewModel.placeName=place.name
+                            refreshWeather()
+                        }
+
                     }
-                    (fragment as PlaceFragment).viewModel.savePlace(place)
-                    fragment.startActivity(intent)
+                    else{
+                        val intent=Intent(AppAplication.context,WeatherActivity::class.java).apply {
+                            putExtra("location_lng",place.location.lng)
+                            putExtra("location_lat",place.location.lat)
+                            putExtra("place_name",place.name)
+                        }
+                        (fragment as PlaceFragment).viewModel.savePlace(place)
+                        fragment.activity?.finish()
+                        fragment.startActivity(intent)
+                    }
                 }
             }
         }

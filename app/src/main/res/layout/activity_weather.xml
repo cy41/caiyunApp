@@ -1,31 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <androidx.drawerlayout.widget.DrawerLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ScrollView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/weatherLayout"
+        android:layout_height="match_parent"
+        android:id="@+id/drawerLayout">
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ScrollView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/weatherLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="invisible">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <include layout="@layout/now"
+                        android:id="@+id/now"/>
+
+                    <include layout="@layout/fragment_forecast"
+                        android:id="@+id/fragmentForecast"/>
+
+                    <include layout="@layout/fragment_life_index"/>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="invisible">
-            <LinearLayout
+            android:layout_gravity="left"
+            android:focusable="true"
+            android:clickable="true">
+            <fragment
+                android:id="@+id/placeFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <include layout="@layout/now"/>
+                android:layout_height="match_parent"
+                android:name="com.example.caiyunmvvmdemo.myFragment.PlaceFragment"
+                android:layout_marginTop="25dp"
+                />
 
-                <include layout="@layout/fragment_forecast"
-                    android:id="@+id/fragmentForecast"/>
 
-                <include layout="@layout/fragment_life_index"/>
+        </FrameLayout>
 
-            </LinearLayout>
-
-        </ScrollView>
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </layout>
