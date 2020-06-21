@@ -24,6 +24,6 @@ object PlaceDao {
         .contains("place")
 
     private fun sharedPreferences() =
-        AppAplication.context.getSharedPreferences("sunny_weather", Context.MODE_PRIVATE)
+        AppAplication.context.getSharedPreferences("caiyun_app", Context.MODE_PRIVATE)
 
 }

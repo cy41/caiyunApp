@@ -12,6 +12,7 @@ import com.example.caiyunmvvmdemo.R
 import com.example.caiyunmvvmdemo.WeatherActivity
 import com.example.caiyunmvvmdemo.data.Place
 import com.example.caiyunmvvmdemo.databinding.PlaceItemBinding
+import com.example.caiyunmvvmdemo.myFragment.PlaceFragment
 
 class PlaceAdapter(val fragment: Fragment,val list: List<Place>): RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
 
@@ -40,6 +41,7 @@ class PlaceAdapter(val fragment: Fragment,val list: List<Place>): RecyclerView.A
                         putExtra("location_lat",place.location.lat)
                         putExtra("place_name",place.name)
                     }
+                    (fragment as PlaceFragment).viewModel.savePlace(place)
                     fragment.startActivity(intent)
                 }
             }

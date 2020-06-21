@@ -1,9 +1,11 @@
-package com.example.caiyunmvvmdemo.network
+package com.example.caiyunmvvmdemo
 
 import android.util.Log
 import androidx.lifecycle.liveData
+import com.example.caiyunmvvmdemo.dao.PlaceDao
 import com.example.caiyunmvvmdemo.data.Place
 import com.example.caiyunmvvmdemo.data.Weather
+import com.example.caiyunmvvmdemo.network.CaiyunNetwork
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -31,10 +33,19 @@ object Repository {
         emit(result as Result<List<Place>>)
     }*/
 
+    fun savePlace(place: Place) = PlaceDao.savePlace(place)
+
+    fun getSavedPlace() = PlaceDao.getSavedPlace()
+
+    fun isPlaceSaved() = PlaceDao.isPlaceSaved()
+
     fun searchPlaces(query: String) =
         fire(Dispatchers.IO) {
-            val placeResponse = CaiyunNetwork.searchPlaces(query)
-            Log.d("rep","${placeResponse.status}")
+            val placeResponse =
+                CaiyunNetwork.searchPlaces(
+                    query
+                )
+            Log.d("rep", "${placeResponse.status}")
             if (placeResponse.status == "ok") {
                 val places = placeResponse.places
                 Result.success(places)
@@ -45,29 +56,39 @@ object Repository {
 
 
     fun refreshWeather(lng: String,lat: String) =
-        fire(Dispatchers.IO){
+        fire(Dispatchers.IO) {
             coroutineScope {
                 val deferredRealtime = async {
-                    CaiyunNetwork.getRealtimeResponse(lng,lat)
+                    CaiyunNetwork.getRealtimeResponse(
+                        lng,
+                        lat
+                    )
                 }
 
                 val deferredDaily = async {
-                    CaiyunNetwork.getDailyResponse(lng,lat)
+                    CaiyunNetwork.getDailyResponse(
+                        lng,
+                        lat
+                    )
                 }
-                val realtimeResponse= deferredRealtime.await()
+                val realtimeResponse = deferredRealtime.await()
 
                 val dailyResponse = deferredDaily.await()
 
-                Log.d("rep","""
+                Log.d(
+                    "rep", """
                     status1 is ${realtimeResponse.status}
                     status2 is ${dailyResponse.status}
-                """.trimIndent())
-                if(realtimeResponse.status=="ok" && dailyResponse.status=="ok"){
-                    Result.success(Weather(
-                        realtimeResponse.result.realtime,
-                        dailyResponse.result.daily))
-                }
-                else{
+                """.trimIndent()
+                )
+                if (realtimeResponse.status == "ok" && dailyResponse.status == "ok") {
+                    Result.success(
+                        Weather(
+                            realtimeResponse.result.realtime,
+                            dailyResponse.result.daily
+                        )
+                    )
+                } else {
                     Result.failure(
                         RuntimeException(
                             """

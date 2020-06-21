@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.caiyunmvvmdemo.data.Place
-import com.example.caiyunmvvmdemo.network.Repository
+import com.example.caiyunmvvmdemo.Repository
 
 class PlaceViewModel: ViewModel() {
     private val searchLiveData= MutableLiveData<String>()
@@ -20,4 +20,11 @@ class PlaceViewModel: ViewModel() {
         searchLiveData.value = query
         println("placeLiveData $placeLiveData")
     }
+
+
+    fun savePlace(place: Place) = Repository.savePlace(place)
+
+    fun getSavedPlace() = Repository.getSavedPlace()
+
+    fun isSavedPlace() = Repository.isPlaceSaved()
 }

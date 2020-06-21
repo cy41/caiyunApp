@@ -4,8 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.caiyunmvvmdemo.data.Location
-import com.example.caiyunmvvmdemo.network.Repository
-import kotlinx.coroutines.runBlocking
+import com.example.caiyunmvvmdemo.Repository
 
 class WeatherViewModel: ViewModel() {
     private val locationLiveData = MutableLiveData<Location>()
