@@ -52,7 +52,7 @@ class PlaceFragment: Fragment() {
         if(activity is MainActivity && viewModel.isSavedPlace()){
             if(loadLocalData()) return
         }
-        initRecyclerView()
+        initUI()
         observeUI()
     }
 
@@ -71,7 +71,7 @@ class PlaceFragment: Fragment() {
         return false
     }
 
-    private fun initRecyclerView(){
+    private fun initUI(){
         val layoutManager= LinearLayoutManager(activity)
         adapter= PlaceAdapter(this,viewModel.placeList)
         binding.apply {
@@ -94,10 +94,15 @@ class PlaceFragment: Fragment() {
                     }
                 }
             }
+
+            clear.setOnClickListener {
+                searchPlaceEdit.setText("")
+            }
         }
     }
 
     private fun observeUI(){
+        viewModel.init()
         viewModel.placeLiveData.observe(this, Observer { result ->
             val places= result.getOrNull()
             if(places!=null){
@@ -114,6 +119,10 @@ class PlaceFragment: Fragment() {
             else{
                 Toast.makeText(context,"can't find anythings",Toast.LENGTH_SHORT).show()
             }
+        })
+        viewModel.num.observe(this, Observer { count ->
+            Log.d("hello","${count}")
+            binding.num.text=count.toString()
         })
     }
 }

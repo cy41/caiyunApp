@@ -1,5 +1,6 @@
 package com.example.caiyunmvvmdemo.viewModels
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,17 @@ import com.example.caiyunmvvmdemo.data.Place
 import com.example.caiyunmvvmdemo.Repository
 
 class PlaceViewModel: ViewModel() {
+
+
+    val num = MediatorLiveData<Int>()
+
+    fun init() {
+        num.addSource(searchLiveData){
+
+            num.postValue(searchLiveData.value?.length)
+        }
+    }
+
     private val searchLiveData= MutableLiveData<String>()
 
     val placeList= ArrayList<Place>()

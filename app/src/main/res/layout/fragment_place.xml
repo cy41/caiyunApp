@@ -25,6 +25,25 @@
                 android:hint="请输入地址"
                 android:background="@drawable/search_bg"
                 />
+            <TextView
+                android:id="@+id/num"
+                android:text="0"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="right"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorBlack"
+                />
+            <TextView
+                android:text="X"
+                android:layout_marginRight="5dp"
+                android:gravity="center_vertical"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:id="@+id/clear"
+                android:layout_gravity="right"
+                />
 
 
         </FrameLayout>
