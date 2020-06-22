@@ -33,9 +33,9 @@ class PlaceAdapter(val fragment: Fragment,val list: List<Place>): RecyclerView.A
 
     inner class ViewHolder(val binding: PlaceItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(place: Place){
+
             binding.apply {
-                placeName.text=place.name
-                placeAddress.text=place.address
+                this.place=place
                 setClickListener {
                     Toast.makeText(AppAplication.context,"click",Toast.LENGTH_SHORT).show()
                     if(fragment.activity is WeatherActivity){

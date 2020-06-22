@@ -29,10 +29,8 @@ class WeatherAdapter(val list: List<ShowMltiData>): RecyclerView.Adapter<Weather
 
         fun bind(item: ShowMltiData){
             itemBinding.apply {
-                dateInfo.text=item.dateInfo
+                this.item=item
                 skyIcon.setImageResource(item.skyIcon)
-                skyInfo.text=item.skyInfo
-                temperatureInfo.text=item.temperatureInfo
             }
 
         }
