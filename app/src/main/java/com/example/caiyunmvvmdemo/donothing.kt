@@ -6,5 +6,7 @@ fun main(){
 //=======
     println("hello world by cyDev")
 //>>>>>>> cyDev
+
+    println("hello world by bugFix")
     
 }
