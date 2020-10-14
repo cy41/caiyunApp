@@ -25,7 +25,8 @@
                     <include layout="@layout/fragment_forecast"
                         android:id="@+id/fragmentForecast"/>
 
-                    <include layout="@layout/fragment_life_index"/>
+                    <include layout="@layout/fragment_life_index"
+                        android:id="@+id/fragmentLifeIndex"/>
 
                 </LinearLayout>
 

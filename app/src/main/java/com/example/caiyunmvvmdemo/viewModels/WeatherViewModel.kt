@@ -6,19 +6,19 @@ import androidx.lifecycle.ViewModel
 import com.example.caiyunmvvmdemo.data.Location
 import com.example.caiyunmvvmdemo.Repository
 
-class WeatherViewModel: ViewModel() {
+class WeatherViewModel : ViewModel() {
     private val locationLiveData = MutableLiveData<Location>()
 
     var locationLng = ""
     var locationLat = ""
     var placeName = ""
 
-    val weatherLiveData = Transformations.switchMap(locationLiveData){location ->
-        Repository.refreshWeather(location.lng,location.lat)
+    val weatherLiveData = Transformations.switchMap(locationLiveData) { location ->
+        Repository.refreshWeather(location.lng, location.lat)
     }
 
-    fun refreshWeather(lng: String,lat: String){
-        locationLiveData.value= Location(lat,lng)
+    fun refreshWeather(lng: String, lat: String) {
+        locationLiveData.value = Location(lat, lng)
     }
 
 }

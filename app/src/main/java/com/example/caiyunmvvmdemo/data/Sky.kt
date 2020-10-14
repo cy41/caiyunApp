@@ -3,7 +3,7 @@ package com.example.caiyunmvvmdemo.data
 import com.example.caiyunmvvmdemo.R
 
 
-class Sky (val info: String, val icon: Int, val bg: Int)
+class Sky(val info: String, val icon: Int, val bg: Int)
 
 private val sky = mapOf(
     "CLEAR_DAY" to Sky(

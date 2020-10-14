@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">caiyunMVVMDemo</string>
+    <string name="hello_world">发%1$s%1$s送%1$s%1$s至</string>
 </resources>

@@ -41,10 +41,7 @@ object Repository {
 
     fun searchPlaces(query: String) =
         fire(Dispatchers.IO) {
-            val placeResponse =
-                CaiyunNetwork.searchPlaces(
-                    query
-                )
+            val placeResponse = CaiyunNetwork.searchPlaces(query)
             Log.d("rep", "${placeResponse.status}")
             if (placeResponse.status == "ok") {
                 val places = placeResponse.places
@@ -55,22 +52,17 @@ object Repository {
         }
 
 
-    fun refreshWeather(lng: String,lat: String) =
+    fun refreshWeather(lng: String, lat: String) =
         fire(Dispatchers.IO) {
             coroutineScope {
                 val deferredRealtime = async {
-                    CaiyunNetwork.getRealtimeResponse(
-                        lng,
-                        lat
-                    )
+                    CaiyunNetwork.getRealtimeResponse(lng, lat)
                 }
 
                 val deferredDaily = async {
-                    CaiyunNetwork.getDailyResponse(
-                        lng,
-                        lat
-                    )
+                    CaiyunNetwork.getDailyResponse(lng, lat)
                 }
+
                 val realtimeResponse = deferredRealtime.await()
 
                 val dailyResponse = deferredDaily.await()

@@ -3,6 +3,9 @@
     package="com.example.caiyunmvvmdemo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".AppAplication"
@@ -12,12 +15,72 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WeatherActivity"></activity>
+        <service
+            android:name=".ShowWeatherService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+
+        <receiver
+            android:name=".myReceiver.PhoneStartReceiver"
+            android:enabled="true"
+            android:exported="true">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            -->
+            <intent-filter>
+                <action android:name="com.example.caiyunmvvmdemo.phone_start_receiver" />
+
+                <data
+                    android:host="phone.start.receiver"
+                    android:path="/test"
+                    android:scheme="receiver" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".TestH5Activity" />
+        <activity android:name=".TestIntentActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="www.cy41"
+                    android:mimeType="text/plain"
+                    android:path="/hello"
+                    android:port="41"
+                    android:scheme="http" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="www.cy41"
+                    android:path="/hello"
+                    android:port="41"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".WeatherActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
     </application>
