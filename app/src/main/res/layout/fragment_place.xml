@@ -35,24 +35,6 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/colorBlack"
                 />
-            <!--<TextView
-                android:text="X"
-                android:layout_marginRight="5dp"
-                android:gravity="center_vertical"a
-                android:layout_width="20dp"
-                android:layout_height="match_parent"
-                android:id="@+id/clear"
-                android:layout_gravity="right"
-                />-->
-            <!--<com.example.caiyunmvvmdemo.view.CloseButton
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:gravity="center_vertical"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:id="@+id/clear"
-                android:layout_gravity="right"
-                />-->
             <com.example.caiyunmvvmdemo.view.MyClearButton
                 android:layout_marginTop="14dp"
                 android:layout_marginRight="8dp"
